@@ -1,0 +1,260 @@
+/*
+ * Tailwind v4 entry: config lives here, with no tailwind.config.js or PostCSS plugin.
+ * - Keep every @import in this top block, above @theme and the rest of the file. Install an
+ *   npm package before @importing its CSS. Never @import a remote URL (web fonts, CDN CSS): the
+ *   build resolves @import from the filesystem. Load those with a <link> in the head() of
+ *   src/routes/__root.tsx and name the family in a --font-* token in @theme inline below.
+ */
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The design lives in this file: oklch color tokens on the shadcn variables
+ * (--background, --foreground, --primary, --secondary, --muted, --accent, ...) plus
+ * new tokens as needed, font tokens, and custom styles and animations.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Barlow Condensed", sans-serif;
+  --color-brand-red: var(--brand-red);
+  --color-brand-yellow: var(--brand-yellow);
+  --color-brand-purple: var(--brand-purple);
+  --color-brand-teal: var(--brand-teal);
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-black: var(--brand-black);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-foreground: var(--whatsapp-foreground);
+  --color-whatsapp-ink: var(--whatsapp-ink);
+  --shadow-sticker: 4px 4px 0 0 var(--brand-black);
+  --shadow-sticker-lg: 10px 10px 0 0 var(--brand-black);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.5rem;
+  --brand-red: oklch(0.63132 0.21811 27.94);
+  --brand-yellow: oklch(0.85661 0.16550 86.55);
+  --brand-purple: oklch(0.41245 0.14853 310.63);
+  --brand-teal: oklch(0.54346 0.08191 186.32);
+  --brand-cream: oklch(0.93175 0.04506 85.87);
+  --brand-black: oklch(0.20904 0 89.88);
+  /* WhatsApp brand green #25D366, its white glyph, and a darker green for icons on light cards. */
+  --whatsapp: oklch(0.76095 0.20146 149.74);
+  --whatsapp-foreground: oklch(1 0 0);
+  --whatsapp-ink: oklch(0.52 0.14 149.74);
+  --background: var(--brand-cream);
+  --foreground: var(--brand-black);
+  --card: var(--brand-cream);
+  --card-foreground: var(--brand-black);
+  --popover: var(--brand-cream);
+  --popover-foreground: var(--brand-black);
+  --primary: var(--brand-red);
+  --primary-foreground: var(--brand-black);
+  --secondary: var(--brand-yellow);
+  --secondary-foreground: var(--brand-black);
+  --muted: oklch(0.89 0.025 85);
+  --muted-foreground: oklch(0.43 0.03 85);
+  --accent: var(--brand-yellow);
+  --accent-foreground: var(--brand-black);
+  --destructive: var(--brand-red);
+  --destructive-foreground: var(--brand-black);
+  --border: color-mix(in oklab, var(--brand-black) 14%, var(--brand-cream));
+  --input: var(--border);
+  --ring: var(--brand-purple);
+  --chart-1: var(--brand-red);
+  --chart-2: var(--brand-teal);
+  --chart-3: var(--brand-purple);
+  --chart-4: var(--brand-yellow);
+  --chart-5: var(--brand-black);
+  --sidebar: var(--brand-cream);
+  --sidebar-foreground: var(--brand-black);
+  --sidebar-primary: var(--brand-red);
+  --sidebar-primary-foreground: var(--brand-black);
+  --sidebar-accent: var(--brand-yellow);
+  --sidebar-accent-foreground: var(--brand-black);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--brand-purple);
+}
+
+.dark {
+  --background: var(--brand-black);
+  --foreground: var(--brand-cream);
+  --card: oklch(0.26 0 89.88);
+  --card-foreground: var(--brand-cream);
+  --popover: oklch(0.26 0 89.88);
+  --popover-foreground: var(--brand-cream);
+  --primary: var(--brand-red);
+  --primary-foreground: var(--brand-black);
+  --secondary: var(--brand-yellow);
+  --secondary-foreground: var(--brand-black);
+  --muted: oklch(0.28 0 89.88);
+  --muted-foreground: oklch(0.76 0.025 85);
+  --accent: var(--brand-teal);
+  --accent-foreground: var(--brand-cream);
+  --destructive: var(--brand-red);
+  --destructive-foreground: var(--brand-black);
+  --border: oklch(1 0 0 / 15%);
+  --input: oklch(1 0 0 / 18%);
+  --ring: var(--brand-purple);
+  --chart-1: var(--brand-red);
+  --chart-2: var(--brand-teal);
+  --chart-3: var(--brand-purple);
+  --chart-4: var(--brand-yellow);
+  --chart-5: var(--brand-cream);
+  --sidebar: oklch(0.26 0 89.88);
+  --sidebar-foreground: var(--brand-cream);
+  --sidebar-primary: var(--brand-red);
+  --sidebar-primary-foreground: var(--brand-black);
+  --sidebar-accent: var(--brand-teal);
+  --sidebar-accent-foreground: var(--brand-cream);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--brand-purple);
+}
+
+/* Bold display headline that pops off a coloured surface. */
+.headline-pop {
+  text-shadow: 4px 4px 0 var(--brand-black);
+}
+
+@media (min-width: 1024px) {
+  .headline-pop {
+    text-shadow: 6px 6px 0 var(--brand-black);
+  }
+}
+
+/* Entrance animation for hero text; disabled for reduced motion. */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.fade-delay-1 {
+  animation-delay: 90ms;
+}
+
+.fade-delay-2 {
+  animation-delay: 180ms;
+}
+
+.fade-delay-3 {
+  animation-delay: 270ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    animation: none;
+  }
+}
+
+/* Gentle fade when switching menu tabs; off for reduced motion. */
+@keyframes tab-fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.tab-fade {
+  animation: tab-fade 0.3s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab-fade {
+    animation: none;
+  }
+}
+
+/* Keep focused fields clear of the floating WhatsApp button on small screens. */
+@media (max-width: 767px) {
+  html {
+    scroll-padding-bottom: 6rem;
+  }
+}
+
+/* Smooth in-page scrolling, only when motion is welcome. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+}
